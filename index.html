@@ -168,14 +168,16 @@
         align-items: center;
         margin-bottom: 30px;
         background: rgba(0,0,0,0.2);
-        padding: 10px 20px;
+        padding: 12px 20px;
         border-radius: 12px;
+        gap: 10px; /* Added gap for safety */
     }
 
     #question-counter, #score-counter {
         font-size: 0.9rem;
         font-weight: 600;
         color: var(--text-muted);
+        white-space: nowrap; /* Prevent text wrapping awkwardly */
     }
 
     #score-counter {
@@ -190,6 +192,7 @@
         font-size: 0.85rem;
         border-radius: 8px;
         box-shadow: none;
+        white-space: nowrap; /* Keep button text on one line */
     }
     #return-btn:hover {
         background: var(--card-hover);
@@ -394,6 +397,35 @@
         header h2 {
             font-size: 1.6rem;
         }
+        
+        /* Revised Quiz Header for Mobile */
+        #quiz-screen .quiz-header {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: auto auto;
+            gap: 10px 15px; /* row gap 10px, col gap 15px */
+            padding: 15px;
+        }
+
+        #question-counter {
+            grid-column: 1;
+            grid-row: 1;
+            text-align: left;
+        }
+
+        #score-counter {
+            grid-column: 2;
+            grid-row: 1;
+            text-align: right;
+        }
+
+        #return-btn {
+            grid-column: 1 / -1; /* Span full width */
+            grid-row: 2;
+            width: 100%;
+            margin-top: 5px;
+        }
+
         #question-text {
             font-size: 1.25rem;
         }
@@ -1164,7 +1196,7 @@
 
     function createBlanks(bank) {
         bank.forEach(q => {
-            const escapedWord = q.word.replace(/[.*+?^${}()|[]\]/g, '\\$&'); 
+            const escapedWord = q.word.replace(/[.*+?^${}()|[]]/g, '\\$&'); 
             const regex = new RegExp(`\\b${escapedWord}\\b`, 'gi');
             
             if (regex.test(q.sentence)) {
